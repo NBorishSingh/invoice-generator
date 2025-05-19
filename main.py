@@ -5,35 +5,39 @@ from datetime import datetime
 
 # Main App Class
 class InvoiceApp:
-    def __init__(self, root):  # Fixed constructor name
+    def __init__(self, root):  #Fixed const name
         self.root = root
         self.root.title("Invoice Generator")
 
-        # Customer Info
-        tk.Label(root, text="Customer Name").grid(row=0, column=0)
-        tk.Label(root, text="Address").grid(row=1, column=0)
-        tk.Label(root, text="Phone").grid(row=2, column=0)
-
-        self.name_entry = tk.Entry(root)
-        self.address_entry = tk.Entry(root)
+        #these tk.Labels are used to take in the customer information.
+        tk.Label(root, text="First Name").grid(row=0, column=0)
+        tk.Label(root, text="Last Name").grid(row=0, column=2)
+        tk.Label(root, text="Phone").grid(row=1, column=0)
+        tk.Label(root, text="Address").grid(row=1, column=2)
+        
+        #the self allows you to access the class and the tk.Entry is used to get a text input box
+        self.First_name_entry = tk.Entry(root)
+        self.last_name_entry = tk.Entry(root)
         self.phone_entry = tk.Entry(root)
+        self.address_entry = tk.Entry(root)
 
-        self.name_entry.grid(row=0, column=1)
+        self.First_name_entry.grid(row=0, column=1)
+        self.last_name_entry.grid(row=0, column=3)
         self.address_entry.grid(row=1, column=1)
-        self.phone_entry.grid(row=2, column=1)
+        self.phone_entry.grid(row=1, column=3)
 
         # Item Entry
-        tk.Label(root, text="Item").grid(row=4, column=0)
-        tk.Label(root, text="Quantity").grid(row=4, column=1)
-        tk.Label(root, text="Price").grid(row=4, column=2)
+        tk.Label(root, text="Item").grid(row=3, column=0)
+        tk.Label(root, text="Quantity").grid(row=3, column=1)
+        tk.Label(root, text="Price").grid(row=3, column=2)
 
         self.item_entry = tk.Entry(root)
         self.qty_entry = tk.Entry(root)
         self.price_entry = tk.Entry(root)
 
-        self.item_entry.grid(row=5, column=0)
-        self.qty_entry.grid(row=5, column=1)
-        self.price_entry.grid(row=5, column=2)
+        self.item_entry.grid(row=4, column=0)
+        self.qty_entry.grid(row=4, column=1)
+        self.price_entry.grid(row=4, column=2)
 
         self.items = []
 
@@ -44,6 +48,16 @@ class InvoiceApp:
         self.items_listbox.grid(row=7, column=0, columnspan=4, pady=10)
 
     def add_item(self):
+        if not self.items:
+            messagebox.showwarning("No Items", "Please add at least one item.")
+            return
+        try:
+            item = self.item_entry.get()
+            if not item:
+                raise ValueError("Please enter the item name.")
+        except ValueError as e:
+            messagebox.showerror("Invalid Input", str(e))
+            return
         item = self.item_entry.get()
         try:
             qty = int(self.qty_entry.get())
@@ -61,11 +75,12 @@ class InvoiceApp:
         self.price_entry.delete(0, tk.END)
 
     def generate_invoice(self):
-        name = self.name_entry.get()
+        name = self.First_name_entry.get()
+        name2 = self.last_name_entry.get()
         address = self.address_entry.get()
         phone = self.phone_entry.get()
 
-        if not name or not address or not phone:
+        if not name or not address or not phone or not name2:
             messagebox.showwarning("Missing Info", "Please fill in all customer details.")
             return
 
@@ -80,7 +95,7 @@ class InvoiceApp:
         pdf.setFont("Helvetica", 10)
         pdf.drawString(50, 785, f"Date: {datetime.now().strftime('%Y-%m-%d')}")
 
-        pdf.drawString(50, 760, f"Customer: {name}")
+        pdf.drawString(50, 760, f"Customer: {name} {name2}")
         pdf.drawString(50, 745, f"Address: {address}")
         pdf.drawString(50, 730, f"Phone: {phone}")
 
