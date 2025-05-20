@@ -50,9 +50,7 @@ class InvoiceApp:
 
     def add_item(self):
         #we use exceptions and the messagebox from the tkinter library to generate a error box for whenever a error ouccrs
-        if not self.items:
-            messagebox.showwarning("No Items", "Please add at least one item.")
-            return
+        
         try:
             item = self.item_entry.get()
             if not item:
@@ -75,7 +73,7 @@ class InvoiceApp:
         self.item_entry.delete(0, tk.END)
         self.qty_entry.delete(0, tk.END)
         self.price_entry.delete(0, tk.END)
-
+    #this function generate invoice takes the data taken from the user and feeds it to the 
     def generate_invoice(self):
         name = self.First_name_entry.get()
         name2 = self.last_name_entry.get()
@@ -95,7 +93,7 @@ class InvoiceApp:
         #here we use canvas to make a pdf for us
         filename = "invoice.pdf"
         pdf = canvas.Canvas(filename)
-        pdf.setFont("Helvetica-Bold", 14)
+        pdf.setFont("Helvetica-Bold", 20)
         pdf.drawString(50, 800, "INVOICE")
         pdf.setFont("Helvetica", 10)
         pdf.drawString(50, 785, f"Date: {datetime.now().strftime('%Y-%m-%d')}")
@@ -105,7 +103,7 @@ class InvoiceApp:
         pdf.drawString(50, 730, f"Phone: {phone}")
 
         pdf.setFont("Helvetica-Bold", 10)
-        pdf.drawString(50, 700, "Item")
+        pdf.drawString(150, 700, "Item")
         pdf.drawString(250, 700, "Quantity")
         pdf.drawString(350, 700, "Unit Price")
         pdf.drawString(450, 700, "Total")
@@ -117,27 +115,27 @@ class InvoiceApp:
         for item, qty, price in self.items:
             total = qty * price
             subtotal += total
-            pdf.drawString(50, y, item)
+            pdf.drawString(150, y, item)
             pdf.drawString(250, y, str(qty))
             pdf.drawString(350, y, f"${price:.2f}")
             pdf.drawString(450, y, f"${total:.2f}")
             y -= 20
 
-        tax = subtotal * 0.1
+        tax = subtotal * 0.18
         total_amount = subtotal + tax
 
         pdf.drawString(350, y - 20, "Subtotal:")
         pdf.drawString(450, y - 20, f"${subtotal:.2f}")
-        pdf.drawString(350, y - 40, "Tax (10%):")
+        pdf.drawString(350, y - 40, "Tax (18%):")
         pdf.drawString(450, y - 40, f"${tax:.2f}")
         pdf.setFont("Helvetica-Bold", 10)
         pdf.drawString(350, y - 60, "Total:")
         pdf.drawString(450, y - 60, f"${total_amount:.2f}")
 
-        pdf.save()
-        messagebox.showinfo("Success", f"Invoice saved as '{filename}'")
+        pdf.save() #we save the pdf file in the computer
+        messagebox.showinfo("Success", f"Invoice saved as {filename}")
 
-# Run the app
+#these are used to run the application.
 root = tk.Tk()
 app = InvoiceApp(root)
 root.mainloop()

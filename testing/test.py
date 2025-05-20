@@ -6,6 +6,9 @@ from datetime import datetime
 items = []
 
 def add_item():
+    if not name or not address or not phone or not name2:
+        messagebox.showwarning("Missing Info", "Please fill in all customer details.")
+        return
     if not items:
         messagebox.showwarning("No Items", "Please add at least one item.")
         return
@@ -37,9 +40,7 @@ def generate_invoice():
     address = address_entry.get()
     phone = phone_entry.get()
 
-    if not name or not address or not phone or not name2:
-        messagebox.showwarning("Missing Info", "Please fill in all customer details.")
-        return
+
 
 
 
