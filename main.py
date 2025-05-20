@@ -4,6 +4,7 @@ from reportlab.pdfgen import canvas
 from datetime import datetime
 
 # Main App Class
+
 class InvoiceApp:
     def __init__(self, root):  #Fixed const name
         self.root = root
@@ -20,21 +21,21 @@ class InvoiceApp:
         self.last_name_entry = tk.Entry(root)
         self.phone_entry = tk.Entry(root)
         self.address_entry = tk.Entry(root)
-
+        #The grid here is being used to specify the position where the Customer gives his information
         self.First_name_entry.grid(row=0, column=1)
         self.last_name_entry.grid(row=0, column=3)
         self.address_entry.grid(row=1, column=1)
         self.phone_entry.grid(row=1, column=3)
 
-        # Item Entry
+        # Item Entry the tk.Labels are here used again to present the text on the screen 
         tk.Label(root, text="Item").grid(row=3, column=0)
         tk.Label(root, text="Quantity").grid(row=3, column=1)
         tk.Label(root, text="Price").grid(row=3, column=2)
-
+        # the tk.Entry being used to generate entry box for the input.
         self.item_entry = tk.Entry(root)
         self.qty_entry = tk.Entry(root)
         self.price_entry = tk.Entry(root)
-
+        # the grid specifies where the Entry box is generated
         self.item_entry.grid(row=4, column=0)
         self.qty_entry.grid(row=4, column=1)
         self.price_entry.grid(row=4, column=2)
@@ -48,6 +49,7 @@ class InvoiceApp:
         self.items_listbox.grid(row=7, column=0, columnspan=4, pady=10)
 
     def add_item(self):
+        #we use exceptions and the messagebox from the tkinter library to generate a error box for whenever a error ouccrs
         if not self.items:
             messagebox.showwarning("No Items", "Please add at least one item.")
             return
@@ -68,7 +70,7 @@ class InvoiceApp:
             messagebox.showerror("Invalid Input", str(e))
             return
 
-        self.items.append((item, qty, price))
+        self.items.append((item, qty, price)) #after the the error checking we append the data
         self.items_listbox.insert(tk.END, f"{item} - {qty} x ${price:.2f}")
         self.item_entry.delete(0, tk.END)
         self.qty_entry.delete(0, tk.END)
