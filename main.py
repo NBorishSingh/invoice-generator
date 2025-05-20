@@ -8,7 +8,7 @@ from datetime import datetime
 class InvoiceApp:
     def __init__(self, root):  #Fixed const name
         self.root = root
-        self.root.title("INVOICE GENE")
+        self.root.title("INVOICE GENERATOR")
 
         #these tk.Labels are used to take in the customer information.
         tk.Label(root, text="First Name").grid(row=0, column=0)
@@ -103,7 +103,7 @@ class InvoiceApp:
         pdf.drawString(50, 730, f"Phone: {phone}")
 
         pdf.setFont("Helvetica-Bold", 10)
-        pdf.drawString(150, 700, "Item")
+        pdf.drawString(50, 700, "Item")
         pdf.drawString(250, 700, "Quantity")
         pdf.drawString(350, 700, "Unit Price")
         pdf.drawString(450, 700, "Total")
@@ -115,7 +115,7 @@ class InvoiceApp:
         for item, qty, price in self.items:
             total = qty * price
             subtotal += total
-            pdf.drawString(150, y, item)
+            pdf.drawString(50, y, item)
             pdf.drawString(250, y, str(qty))
             pdf.drawString(350, y, f"${price:.2f}")
             pdf.drawString(450, y, f"${total:.2f}")
@@ -138,4 +138,5 @@ class InvoiceApp:
 #these are used to run the application.
 root = tk.Tk()
 app = InvoiceApp(root)
+print(app)
 root.mainloop()
