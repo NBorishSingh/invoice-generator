@@ -7,7 +7,7 @@ from datetime import datetime
 class InvoiceApp:
     def __init__(self, root):  #Fixed const name
         self.root = root
-        self.root.title("Invoice Generator")
+        self.root.title("INVOICE GENE")
 
         #these tk.Labels are used to take in the customer information.
         tk.Label(root, text="First Name").grid(row=0, column=0)
@@ -15,7 +15,7 @@ class InvoiceApp:
         tk.Label(root, text="Phone").grid(row=1, column=0)
         tk.Label(root, text="Address").grid(row=1, column=2)
         
-        #the self allows you to access the class and the tk.Entry is used to get a text input box
+        #the self allows you to access the class and the tk.Entry is used to generate a single line text input
         self.First_name_entry = tk.Entry(root)
         self.last_name_entry = tk.Entry(root)
         self.phone_entry = tk.Entry(root)
