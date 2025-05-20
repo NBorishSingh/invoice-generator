@@ -64,7 +64,7 @@ class InvoiceApp:
         try:
             qty = int(self.qty_entry.get())
             price = float(self.price_entry.get())
-            if qty < 0 or price < 0:  # Check for negative values
+            if qty < 0 or price < 0:  # Check for negative values in the qty and price box
                 raise ValueError("Quantity and Price must be non-negative.")
         except ValueError as e:
             messagebox.showerror("Invalid Input", str(e))
@@ -81,7 +81,9 @@ class InvoiceApp:
         name2 = self.last_name_entry.get()
         address = self.address_entry.get()
         phone = self.phone_entry.get()
-
+        
+        #here we check and make sure that all the variables are filled and none of them are empty. 
+        
         if not name or not address or not phone or not name2:
             messagebox.showwarning("Missing Info", "Please fill in all customer details.")
             return
@@ -89,7 +91,8 @@ class InvoiceApp:
         if not self.items:
             messagebox.showwarning("No Items", "Please add at least one item.")
             return
-
+        
+        #here we use canvas to make a pdf for us
         filename = "invoice.pdf"
         pdf = canvas.Canvas(filename)
         pdf.setFont("Helvetica-Bold", 14)
